@@ -3,6 +3,8 @@
 CONFIG_FILE=/etc/dnsmasq.conf
 PID_FILE=/var/run/dnsmasq.pid
 
+python3 service/dhcp_service.py
+
 # Restart dnsmasq when config changes
 while true; do
 

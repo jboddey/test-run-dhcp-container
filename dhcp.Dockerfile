@@ -2,14 +2,16 @@
 
 FROM ubuntu:jammy
 
-# Install common software
-RUN apt-get update && apt-get install -y net-tools iputils-ping tcpdump iproute2 arp-scan jq
+# Install software
+RUN apt-get update && apt-get install -y net-tools iputils-ping tcpdump iproute2 arp-scan jq dnsmasq python3 python3-pip protobuf-compiler
 
-# Install dnsmasq
-RUN apt-get install -y dnsmasq
+# Install Python dependencies
+RUN pip install grpcio-tools protobuf==3.20.*
+
+COPY service service
 
 # Copy configuration files
-COPY dnsmasq-primary.conf /etc/dnsmasq.conf
+COPY conf/dnsmasq-primary.conf /etc/dnsmasq.conf
 COPY start_dhcp start_dhcp
 
 RUN chmod u+x start_dhcp
